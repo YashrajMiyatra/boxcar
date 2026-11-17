@@ -73,11 +73,28 @@ def cmd_run(store: ImageStore, client: DockerRegistryClient, args: argparse.Name
     if not command:
         command = ["/bin/sh"]
 
+    # Parse environment variables: -e KEY=VAL
+    env_vars = {}
+    if getattr(args, "env", None):
+        for item in args.env:
+            if "=" in item:
+                k, v = item.split("=", 1)
+                env_vars[k] = v
+            else:
+                env_vars[item] = os.environ.get(item, "")
+
     print(f"\033[1;34m[*] Running container from '{image}:{tag}'...\033[0m")
     if args.memory:
         print(f"  \033[90mMemory limit: {args.memory} MB\033[0m")
+    if env_vars:
+        print(f"  \033[90mEnvironment variables: {len(env_vars)} injected\033[0m")
 
-    exit_code = runner.run(command, memory_limit_mb=args.memory, cpu_time_limit_sec=args.cpu)
+    exit_code = runner.run(
+        command,
+        memory_limit_mb=args.memory,
+        cpu_time_limit_sec=args.cpu,
+        env_vars=env_vars,
+    )
     sys.exit(exit_code)
 
 
@@ -106,6 +123,7 @@ def main() -> None:
     p_run = subparsers.add_parser("run", help="Run a command inside a container")
     p_run.add_argument("-m", "--memory", type=int, help="Memory limit in megabytes")
     p_run.add_argument("--cpu", type=int, help="CPU time limit in seconds")
+    p_run.add_argument("-e", "--env", action="append", help="Set environment variables in container (KEY=VALUE)")
     p_run.add_argument("image", help="Image name (e.g. alpine)")
     p_run.add_argument("cmd", nargs=argparse.REMAINDER, help="Command to execute")
 

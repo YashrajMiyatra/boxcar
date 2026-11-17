@@ -18,6 +18,14 @@ class TestRuntime(unittest.TestCase):
         code = self.runner.run(["echo", "Container Sandbox Active"])
         self.assertEqual(code, 0)
 
+    def test_run_with_env_vars(self):
+        # Verifies custom environment variables are injected into container environment
+        code = self.runner.run(
+            ["python3", "-c", "import os; assert os.environ.get('MY_CONTAINER_VAR') == 'boxcar_ok'"],
+            env_vars={"MY_CONTAINER_VAR": "boxcar_ok"},
+        )
+        self.assertEqual(code, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
