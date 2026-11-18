@@ -26,6 +26,10 @@ class TestRuntime(unittest.TestCase):
         )
         self.assertEqual(code, 0)
 
+    def test_run_command_failure(self):
+        code = self.runner.run(["python3", "-c", "import sys; sys.exit(42)"])
+        self.assertEqual(code, 42)
+
 
 if __name__ == "__main__":
     unittest.main()
