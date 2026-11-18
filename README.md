@@ -55,6 +55,11 @@ Run a container with a 64 MB memory limit:
 python3 -m boxcar.cli run -m 64 alpine /bin/echo "Hello from Boxcar container!"
 ```
 
+Pass custom environment variables with `-e / --env`:
+```bash
+python3 -m boxcar.cli run -e APP_ENV=production -m 64 alpine /bin/sh -c "echo \$APP_ENV"
+```
+
 ---
 
 ## 🧪 Testing
