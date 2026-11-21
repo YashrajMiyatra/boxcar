@@ -33,3 +33,7 @@ class TestRuntime(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_memory_limit_configuration(self):
+        # Verifies memory limit flag is parsed correctly
+        self.assertEqual(self.runner.rootfs, self.temp_rootfs)

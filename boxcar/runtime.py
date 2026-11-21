@@ -1,6 +1,12 @@
 """
 Boxcar Container Runtime.
 Spawns isolated processes with resource quotas (memory, CPU) and custom rootfs environments.
+
+Lifecycle Architecture:
+1. RootFS Mount: chroot into merged OCI image layers.
+2. Namespace Isolation: PID, mount, UTS, and network namespace detachment.
+3. Cgroups Enforcement: Memory boundaries (rlimit/cgroup v2 memory.max).
+4. Process Execution: Fork and execve with environment variable injection.
 """
 
 import os
