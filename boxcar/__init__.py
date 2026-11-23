@@ -8,6 +8,7 @@ from .registry import DockerRegistryClient
 from .storage import ImageStore
 from .runtime import ContainerRunner
 from .health import HealthCheckConfig, HealthCheckRunner, HealthStatus
+from .network import NetworkManager, NetworkConfig, VethPair
 
 __all__ = [
     "DockerRegistryClient",
@@ -16,4 +17,7 @@ __all__ = [
     "HealthCheckConfig",
     "HealthCheckRunner",
     "HealthStatus",
+    "NetworkManager",
+    "NetworkConfig",
+    "VethPair",
 ]
