@@ -13,7 +13,7 @@ import os
 import resource
 import subprocess
 import sys
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class ContainerRunner:
@@ -110,3 +110,82 @@ class ContainerRunner:
         except Exception as e:
             print(f"Execution error: {e}")
             return 1
+
+    def run_with_telemetry(
+        self,
+        command: List[str],
+        memory_limit_mb: Optional[int] = None,
+        cpu_time_limit_sec: Optional[int] = None,
+        env_vars: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Executes a container process and returns real-time resource telemetry:
+        exit_code, wall_time_sec, max_rss_kb, cpu_user_time, and status.
+        """
+        import time
+        start_time = time.time()
+
+        if not command:
+            raise ValueError("No command specified to run.")
+
+        args = [self._resolve_binary(command[0])] + command[1:]
+        container_env = dict(os.environ)
+        container_env["BOXCAR_CONTAINER"] = "1"
+        if env_vars:
+            container_env.update(env_vars)
+
+        def preexec_fn():
+            if memory_limit_mb:
+                mem_bytes = memory_limit_mb * 1024 * 1024
+                try:
+                    resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
+                except Exception:
+                    pass
+            if cpu_time_limit_sec:
+                try:
+                    resource.setrlimit(resource.RLIMIT_CPU, (cpu_time_limit_sec, cpu_time_limit_sec))
+                except Exception:
+                    pass
+            try:
+                os.chdir(self.rootfs)
+            except Exception:
+                pass
+
+        try:
+            proc = subprocess.Popen(
+                args,
+                env=container_env,
+                cwd=self.rootfs,
+                preexec_fn=preexec_fn,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            stdout, stderr = proc.communicate()
+            exit_code = proc.returncode
+            wall_time = time.time() - start_time
+            usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+
+            return {
+                "exit_code": exit_code,
+                "wall_time_sec": round(wall_time, 4),
+                "user_cpu_sec": round(usage.ru_utime, 4),
+                "sys_cpu_sec": round(usage.ru_stime, 4),
+                "max_rss_kb": usage.ru_maxrss,
+                "stdout": stdout.decode("utf-8", errors="replace"),
+                "stderr": stderr.decode("utf-8", errors="replace"),
+                "status": "success" if exit_code == 0 else "failed",
+            }
+        except FileNotFoundError:
+            return {
+                "exit_code": 127,
+                "wall_time_sec": round(time.time() - start_time, 4),
+                "error": f"Command '{command[0]}' not found.",
+                "status": "not_found",
+            }
+        except Exception as e:
+            return {
+                "exit_code": 1,
+                "wall_time_sec": round(time.time() - start_time, 4),
+                "error": str(e),
+                "status": "error",
+            }
