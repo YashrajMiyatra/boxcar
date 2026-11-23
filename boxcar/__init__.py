@@ -12,6 +12,7 @@ from .network import NetworkManager, NetworkConfig, VethPair
 from .mount import VolumeMount, VolumeManager
 from .lifecycle import LifecycleManager
 from .cpu import CPUBandwidthQuota
+from .memory import MemoryLimitSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -27,4 +28,5 @@ __all__ = [
     "VolumeManager",
     "LifecycleManager",
     "CPUBandwidthQuota",
+    "MemoryLimitSpec",
 ]
