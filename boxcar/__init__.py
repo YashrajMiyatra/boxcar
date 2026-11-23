@@ -10,6 +10,7 @@ from .runtime import ContainerRunner
 from .health import HealthCheckConfig, HealthCheckRunner, HealthStatus
 from .network import NetworkManager, NetworkConfig, VethPair
 from .mount import VolumeMount, VolumeManager
+from .lifecycle import LifecycleManager
 
 __all__ = [
     "DockerRegistryClient",
@@ -23,4 +24,5 @@ __all__ = [
     "VethPair",
     "VolumeMount",
     "VolumeManager",
+    "LifecycleManager",
 ]
