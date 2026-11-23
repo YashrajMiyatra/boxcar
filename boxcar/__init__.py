@@ -11,6 +11,7 @@ from .health import HealthCheckConfig, HealthCheckRunner, HealthStatus
 from .network import NetworkManager, NetworkConfig, VethPair
 from .mount import VolumeMount, VolumeManager
 from .lifecycle import LifecycleManager
+from .cpu import CPUBandwidthQuota
 
 __all__ = [
     "DockerRegistryClient",
@@ -25,4 +26,5 @@ __all__ = [
     "VolumeMount",
     "VolumeManager",
     "LifecycleManager",
+    "CPUBandwidthQuota",
 ]
