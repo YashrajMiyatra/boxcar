@@ -17,6 +17,7 @@ from .env import EnvironmentInjector
 from .oom import OOMScoreAdjustSpec
 from .security import ReadOnlyRootfsSpec
 from .seccomp import SeccompFilterSpec
+from .capabilities import LinuxCapabilitiesSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -37,4 +38,5 @@ __all__ = [
     "OOMScoreAdjustSpec",
     "ReadOnlyRootfsSpec",
     "SeccompFilterSpec",
+    "LinuxCapabilitiesSpec",
 ]
