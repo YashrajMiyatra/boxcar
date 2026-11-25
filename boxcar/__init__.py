@@ -14,6 +14,7 @@ from .lifecycle import LifecycleManager
 from .cpu import CPUBandwidthQuota
 from .memory import MemoryLimitSpec
 from .env import EnvironmentInjector
+from .oom import OOMScoreAdjustSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -31,4 +32,5 @@ __all__ = [
     "CPUBandwidthQuota",
     "MemoryLimitSpec",
     "EnvironmentInjector",
+    "OOMScoreAdjustSpec",
 ]
