@@ -16,6 +16,7 @@ from .memory import MemoryLimitSpec
 from .env import EnvironmentInjector
 from .oom import OOMScoreAdjustSpec
 from .security import ReadOnlyRootfsSpec
+from .seccomp import SeccompFilterSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -35,4 +36,5 @@ __all__ = [
     "EnvironmentInjector",
     "OOMScoreAdjustSpec",
     "ReadOnlyRootfsSpec",
+    "SeccompFilterSpec",
 ]
