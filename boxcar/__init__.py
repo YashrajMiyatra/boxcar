@@ -13,6 +13,7 @@ from .mount import VolumeMount, VolumeManager
 from .lifecycle import LifecycleManager
 from .cpu import CPUBandwidthQuota
 from .memory import MemoryLimitSpec
+from .env import EnvironmentInjector
 
 __all__ = [
     "DockerRegistryClient",
@@ -29,4 +30,5 @@ __all__ = [
     "LifecycleManager",
     "CPUBandwidthQuota",
     "MemoryLimitSpec",
+    "EnvironmentInjector",
 ]
