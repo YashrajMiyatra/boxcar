@@ -18,6 +18,7 @@ from .oom import OOMScoreAdjustSpec
 from .security import ReadOnlyRootfsSpec
 from .seccomp import SeccompFilterSpec
 from .capabilities import LinuxCapabilitiesSpec
+from .sysctl import SysctlSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -39,4 +40,5 @@ __all__ = [
     "ReadOnlyRootfsSpec",
     "SeccompFilterSpec",
     "LinuxCapabilitiesSpec",
+    "SysctlSpec",
 ]
