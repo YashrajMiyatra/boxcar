@@ -20,6 +20,7 @@ from .seccomp import SeccompFilterSpec
 from .capabilities import LinuxCapabilitiesSpec
 from .sysctl import SysctlSpec
 from .pids import PIDLimitSpec
+from .userns import UserNamespaceSpec, IDMapping
 
 __all__ = [
     "DockerRegistryClient",
@@ -43,4 +44,6 @@ __all__ = [
     "LinuxCapabilitiesSpec",
     "SysctlSpec",
     "PIDLimitSpec",
+    "UserNamespaceSpec",
+    "IDMapping",
 ]
