@@ -19,6 +19,7 @@ from .security import ReadOnlyRootfsSpec
 from .seccomp import SeccompFilterSpec
 from .capabilities import LinuxCapabilitiesSpec
 from .sysctl import SysctlSpec
+from .pids import PIDLimitSpec
 
 __all__ = [
     "DockerRegistryClient",
@@ -41,4 +42,5 @@ __all__ = [
     "SeccompFilterSpec",
     "LinuxCapabilitiesSpec",
     "SysctlSpec",
+    "PIDLimitSpec",
 ]
