@@ -21,6 +21,7 @@ from .capabilities import LinuxCapabilitiesSpec
 from .sysctl import SysctlSpec
 from .pids import PIDLimitSpec
 from .userns import UserNamespaceSpec, IDMapping
+from .apparmor import AppArmorProfileSpec, AppArmorRule
 
 __all__ = [
     "DockerRegistryClient",
@@ -46,4 +47,6 @@ __all__ = [
     "PIDLimitSpec",
     "UserNamespaceSpec",
     "IDMapping",
+    "AppArmorProfileSpec",
+    "AppArmorRule",
 ]
