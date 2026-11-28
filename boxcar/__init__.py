@@ -23,6 +23,7 @@ from .pids import PIDLimitSpec
 from .userns import UserNamespaceSpec, IDMapping
 from .apparmor import AppArmorProfileSpec, AppArmorRule
 from .devices import DeviceCgroupSpec, DeviceRule
+from .rlimits import RlimitsSpec, RlimitEntry
 
 __all__ = [
     "DockerRegistryClient",
@@ -52,4 +53,6 @@ __all__ = [
     "AppArmorRule",
     "DeviceCgroupSpec",
     "DeviceRule",
+    "RlimitsSpec",
+    "RlimitEntry",
 ]
